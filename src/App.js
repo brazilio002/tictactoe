@@ -8,16 +8,63 @@ class App extends Component {
     this.state = {
       boardBoxes: Array(9).fill(null),
       currentPlayer: "X",
+      turnCount:0,
+      currentPlayer: "X",
+      playerOne:  [],
+      playerTwo: [],
+      winner: null,
+      keepPlaying: true
     }
   }
 
-  playerClick(index) {
-      if (this.state.boardBoxes[index] === null) {
-        this.state.boardBoxes[index] = this.state.currentPlayer
-        this.setState({
-          currentPlayer: this.state.currentPlayer === "X" ? "O" : "X"
-        })
+  checkStatus(player, playerName) {
+    var gameOver = false;
+    var winnerCompinations =  [[0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 8],[0, 4, 8],[2, 4, 6]]
+    if(this.state.keepPlaying) {
+    winnerCompinations.forEach(function(winnerCompination) {
+      const found = winnerCompination.every(r=> player.indexOf(r) >= 0)
+      if (found) {
+        alert("Congratulation " + playerName)
+        gameOver = true;
       }
+    })
+    if(gameOver) {
+      this.reset()
+    }
+  }
+  }
+
+  playerClick(index) {
+      if(this.state.keepPlaying) {
+        if (this.state.boardBoxes[index] === null) {
+          this.state.boardBoxes[index] = this.state.currentPlayer
+          this.setState({
+            currentPlayer: this.state.currentPlayer === "X" ? "O" : "X"
+          })
+
+          this.IncrementItem()
+
+          if (this.state.turnCount % 2 === 0) {
+            this.state.playerOne.push(index)
+            /* alert(this.state.playerOne) */
+            this.checkStatus(this.state.playerOne, "player One")
+            if (this.state.playerOne.length == 5) {
+              alert("Tie, retry again")
+              this.reset()
+            }
+          }
+
+          else {
+            this.state.playerTwo.push(index)
+            /* alert(this.state.playerTwo) */
+            this.checkStatus(this.state.playerTwo, "player two")
+          }
+        }
+      }
+    }
+
+  IncrementItem = () => {
+    this.setState({ turnCount: this.state.turnCount + 1 });
   }
 
 
@@ -29,7 +76,17 @@ class App extends Component {
         <div className="x-or-o">{box}</div>
       </div>
   )
-}
+  }
+
+  reset = () => {
+  this.setState({
+    currentPlayer: "X",
+    boardBoxes: Array(9).fill(null),
+    keepPlaying: true,
+    playerOne:  [],
+    playerTwo: []
+  })
+  }
 
   render() {
     return (
