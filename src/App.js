@@ -7,13 +7,25 @@ class App extends Component {
     super(props)
     this.state = {
       boardBoxes: Array(9).fill(null),
+      currentPlayer: "X",
     }
   }
+
+  playerClick(index) {
+      if (this.state.boardBoxes[index] === null) {
+        this.state.boardBoxes[index] = this.state.currentPlayer
+        this.setState({
+          currentPlayer: this.state.currentPlayer === "X" ? "O" : "X"
+        })
+      }
+  }
+
 
   renderBoxes() {
   return this.state.boardBoxes.map(
     (box, index) =>
-      <div className="box" key={index}>
+      <div className="box" key={index}
+        onClick={() => this.playerClick(index)}>
         <div className="x-or-o">{box}</div>
       </div>
   )
