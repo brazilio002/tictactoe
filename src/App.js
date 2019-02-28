@@ -95,6 +95,7 @@ class App extends Component {
         <div className="game-board">
           {this.renderBoxes()}
         </div>
+        <button onClick={() => this.reset()}> Reset game </button >
       </div>
     );
   }

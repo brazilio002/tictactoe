@@ -18,6 +18,7 @@
 .game-board{
     width: 400px;
     margin: auto;
+    margin-bottom: 41px;
 }
 
 .container{
