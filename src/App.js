@@ -50,7 +50,7 @@ class App extends Component {
             this.state.playerOne.push(index)
             /* alert(this.state.playerOne) */
             this.checkStatus(this.state.playerOne, "player One")
-            if (this.state.playerOne.length == 5) {
+            if (this.state.playerOne.length === 5) {
               alert("Tie, retry again")
               this.reset()
             }
