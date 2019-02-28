@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import Header from './Header.js'
 import './App.css';
+import Popup from './Popup.js'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       boardBoxes: Array(9).fill(null),
-      currentPlayer: "X",
       turnCount:0,
       currentPlayer: "X",
       playerOne:  [],
       playerTwo: [],
       winner: null,
-      keepPlaying: true
+      keepPlaying: true,
+      showPopup: false
     }
   }
 
@@ -30,6 +31,7 @@ class App extends Component {
     })
     if(gameOver) {
       this.reset()
+      this.setState({ showPopup: true })
     }
   }
   }
@@ -78,6 +80,12 @@ class App extends Component {
   )
   }
 
+  gameOverPopup() {
+    if(this.state.showPopup) {
+        return <Popup  />
+    }
+  }
+
   reset = () => {
   this.setState({
     currentPlayer: "X",
@@ -95,6 +103,7 @@ class App extends Component {
         <div className="game-board">
           {this.renderBoxes()}
         </div>
+        <div> {this.gameOverPopup()} </div>
         <button onClick={() => this.reset()}> Reset game </button >
       </div>
     );
