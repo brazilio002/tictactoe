@@ -18,9 +18,9 @@ class Popup extends Component {
       <div>
         <Modal open={open} onClose={this.onCloseModal} center>
         <div className = "popup-container">
-          <h2> you enjoyed ? </h2>
+          <h2> another game ? of course !</h2>
           <div className ="popup-yes-button">
-          <button onClick={this.onCloseModal}> yes </button >
+          <button onClick={this.onCloseModal}> Restart </button >
           </div>
         </div>
         </Modal>

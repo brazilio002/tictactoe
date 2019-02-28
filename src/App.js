@@ -12,9 +12,9 @@ class App extends Component {
       currentPlayer: "X",
       playerOne:  [],
       playerTwo: [],
-      winner: null,
       keepPlaying: true,
-      showPopup: false
+      showPopup: false,
+      firstTime:true
     }
   }
 
@@ -25,7 +25,7 @@ class App extends Component {
     winnerCompinations.forEach(function(winnerCompination) {
       const found = winnerCompination.every(r=> player.indexOf(r) >= 0)
       if (found) {
-        alert("Congratulation " + playerName)
+        alert("Congratulation " + playerName + ", you won")
         gameOver = true;
       }
     })
@@ -71,6 +71,11 @@ class App extends Component {
 
 
   renderBoxes() {
+    if(this.state.firstTime) {
+      alert("this is a beta version of tic tac toe game, the 'X' player starts. ")
+      this.setState({firstTime: false})
+    }
+
   return this.state.boardBoxes.map(
     (box, index) =>
       <div className="box" key={index}
@@ -88,6 +93,7 @@ class App extends Component {
 
   reset = () => {
   this.setState({
+    turnCount:0,
     currentPlayer: "X",
     boardBoxes: Array(9).fill(null),
     keepPlaying: true,
