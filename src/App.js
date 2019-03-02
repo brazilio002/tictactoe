@@ -12,16 +12,15 @@ class App extends Component {
       currentPlayer: "X",
       playerOne:  [],
       playerTwo: [],
-      keepPlaying: true,
       showPopup: false,
       firstTime:true
     }
   }
 
+/* check the status of the game after each game */
   checkStatus(player, playerName) {
     var gameOver = false;
     var winnerCompinations =  [[0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 8],[0, 4, 8],[2, 4, 6]]
-    if(this.state.keepPlaying) {
     winnerCompinations.forEach(function(winnerCompination) {
       const found = winnerCompination.every(r=> player.indexOf(r) >= 0)
       if (found) {
@@ -34,10 +33,9 @@ class App extends Component {
       this.setState({ showPopup: true })
     }
   }
-  }
 
+/* click on box */
   playerClick(index) {
-      if(this.state.keepPlaying) {
         if (this.state.boardBoxes[index] === null) {
           this.state.boardBoxes[index] = this.state.currentPlayer
           this.setState({
@@ -62,20 +60,20 @@ class App extends Component {
             this.checkStatus(this.state.playerTwo, "player two")
           }
         }
-      }
     }
 
   IncrementItem = () => {
     this.setState({ turnCount: this.state.turnCount + 1 });
   }
 
-
+/* the first pop up when you start the game  */
   renderBoxes() {
     if(this.state.firstTime) {
       alert("this is a beta version of tic tac toe game, the 'X' player starts. ")
       this.setState({firstTime: false})
     }
 
+/* dispay the board game*/
   return this.state.boardBoxes.map(
     (box, index) =>
       <div className="box" key={index}
@@ -85,18 +83,19 @@ class App extends Component {
   )
   }
 
+/* display a pop when the game is over and restart it */
   gameOverPopup() {
     if(this.state.showPopup) {
         return <Popup  />
     }
   }
 
+/* reset function to set all attributes to the first state */
   reset = () => {
   this.setState({
     turnCount:0,
     currentPlayer: "X",
     boardBoxes: Array(9).fill(null),
-    keepPlaying: true,
     playerOne:  [],
     playerTwo: []
   })
